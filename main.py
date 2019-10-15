@@ -48,31 +48,34 @@ def query(descr, numRes):
     hits = results.get('total_hits', 0)
     movieData = results.get('results')
     
+    termsOrig = mc.get_tokens(descr)
     regStr = ""
-    for term in terms:
+    for term in termsOrig:
         s1 = "(\\b" + str(term) + "\\b)|"
         regStr += s1
     regStr = regStr[:-1]
-    regex = re.compile(r"%s" % regStr, re.I)   
+    print(regStr)
+    regex = re.compile(r"%s" % regStr, re.I)
     # makes sure movies doesn't have data from previous search
     if bool(movies):
         movies.clear()
-    # highlight the terms in the movie descriptions    
-    temp1, temp2 = ("", "")
+    # highlight the terms in the movie descriptions  
+    #temp1 = ""; temp2 = ""
+    d2 = {}
     for res in movieData:
         text = res.get('text')
-        i = 0; output = "<html>"
+        i = 0; output = ""; temp1 = ""; temp2 = ""
         for m in regex.finditer(text):
-            output += "".join([text[i:m.start()],
-                       "<strong><span style='background-color:#FFFF00'>",
-                       text[m.start():m.end()],
-                       "</span></strong>"])
+            output += "".join([text[i:m.start()], "<strong><span style='background-color:#FFFF00'>", text[m.start():m.end()], "</span></strong>"])
             i = m.end()
             temp1 = output
             temp2 = text[m.end():]
-        s2 = "".join([temp1, temp2, "</html>"])
+        s2 = "".join([temp1, temp2])
         d1 = {'text': Markup(u"%s" % s2)}
-        res.update(d1)
+        if not s2 == "":
+            if not d1 == d2:
+                res.update(d1)
+                d2 = d1
         # add each result to movies dict
         movies.append(res)
     return hits, searchTime
@@ -93,4 +96,4 @@ def home():
     return render_template("home.html", form=form, movies=movies)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug = False)
