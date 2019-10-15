@@ -74,6 +74,19 @@ class Movieclassifier(object):
         current_stats = self.read_stats()
         return int(current_stats.get('total_docs', 0))
     
+    def get_tokens(self, blob):
+        blob = self.punctuation.sub(' ', blob) #strip the punctuation
+        tokens = []
+        
+        for token in blob.split():
+            
+            token = token.lower().strip()
+
+            if not token in self.stopwords:
+                tokens.append(token)
+
+        return tokens
+    
     def make_tokens(self, blob):
         blob = self.punctuation.sub(' ', blob) #strip the punctuation
         tokens = []
