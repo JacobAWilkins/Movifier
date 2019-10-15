@@ -15,7 +15,7 @@ import csv, movieclassifier, shutil, time, re
 movies = []
 
 # initial movie classifier
-data_dir = '/temp/movie_index'
+data_dir = '/temps/movie_index'
 shutil.rmtree(data_dir, ignore_errors=True)
 mc = movieclassifier.Movieclassifier(data_dir)
 
