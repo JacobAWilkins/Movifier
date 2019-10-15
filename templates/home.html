@@ -5,7 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 		
     <title>Movifier</title>
@@ -15,72 +14,77 @@
 			<h1> Movifier </h1>
 			<p> <i>Do you like movies?</i> Type a description of your dream movie to get started! </p>
 			<p> Search results are scored based upon BM25 relevance and are typically scored between <i>0.4</i> and <i>1.0</i>. </p>
-			{% with messages = get_flashed_messages(with_categories=true) %}
-				{% if messages %}
-					{% for category, message in messages %}
-						<div class="alert alert-{{ category }}">
-							{{ message }}
-						</div>
-					{% endfor %}
-				{% endif %}
-			{% endwith %}
-			{% block content %}
-			<div class="content-section">
-				<form method="POST" action="">
-					{{ form.hidden_tag() }}
-					<fieldset class="form-group">
-						<legend class="border-bottom mb-4">Search Movie Descriptions</legend>
-						<div class="form-group">
-							{{ form.movieDescription.label(class="form-control-label") }}
-							{% if form.movieDescription.errors %}
-								{{ form.movieDescription(class="form-control-lg is-invalid") }}
-								<div class="invalid-feedback">
-									{% for error in form.movieDescription.errors %}
-										<span>{{ error }}</span>
-									{% endfor %}
+			<div class="row">
+				<div class="col-md-8">
+					{% with messages = get_flashed_messages(with_categories=true) %}
+						{% if messages %}
+							{% for category, message in messages %}
+								<div class="alert alert-{{ category }}">
+									{{ message }}
 								</div>
-							{% else %}
-								{{ form.movieDescription(class="form-control-lg") }}
-							{% endif %} 
-						</div>
-						<div class="form-group">
-							{{ form.numResults.label(class="form-control-label") }}
-							{% if form.numResults.errors %}
-								{{ form.numResults(class="form-control-lg is-invalid") }}
-								<div class="invalid-feedback">
-									{% for error in form.numResults.errors %}
-										<span>{{ error }}</span>
-									{% endfor %}
-								</div>
-							{% else %}
-								{{ form.numResults(class="form-control-lg") }}
-							{% endif %}
-						</div>
+							{% endfor %}
+						{% endif %}
+					{% endwith %}
+					{% block content %}
+				</div>
+			</div>
+			<div class="row">
+				<div class="content-section col-md-8">
+					<form method="POST" action="">
+						{{ form.hidden_tag() }}
+						<fieldset class="form-group">
+							<legend class="border-bottom mb-4">Search Movie Descriptions</legend>
+							<div class="form-group">
+								{{ form.movieDescription.label(class="form-control-label") }}
+								{% if form.movieDescription.errors %}
+									{{ form.movieDescription(class="form-control form-control-lg is-invalid", placeholder="Ex: The Joker wreaks havoc on the people of Gotham", row='50', cols='60') }}
+									<div class="invalid-feedback">
+										{% for error in form.movieDescription.errors %}
+											<span>{{ error }}</span>
+										{% endfor %}
+									</div>
+								{% else %}
+									{{ form.movieDescription(class="form-control form-control-lg", placeholder="Ex: The Joker wreaks havoc on the people of Gotham", row='50', cols='60') }}
+								{% endif %} 
+							</div>
+							<div class="form-group">
+								{{ form.numResults.label(class="form-control-label") }}
+								{% if form.numResults.errors %}
+									{{ form.numResults(class="form-control form-control-lg is-invalid", placeholder="Ex: 20") }}
+									<div class="invalid-feedback">
+										{% for error in form.numResults.errors %}
+											<span>{{ error }}</span>
+										{% endfor %}
+									</div>
+								{% else %}
+									{{ form.numResults(class="form-control form-control-lg", placeholder="Ex: 20") }}
+								{% endif %}
+							</div>
+						</fieldset>
 						<div class="form-group">
 							{{ form.submit(class="btn btn-outline-info") }}
 						</div>
-					</fieldset>
-				</form>
+					</form>
+				</div>
 			</div>
-			{% endblock content %}
-			
-			{% block res %}
-    		{% for movie in movies %}
-        <article class="media content-section">
-          <div class="media-body">
-            <h2><a class="article-title" href="#">{{ movie.id }}</a></h2>
-            <p class="article-content">{{ (movie.text)|safe }}</p>
+    	{% for movie in movies %}
+			<div class="row">
+				<article class="media content-section col-md-8">
+					<div class="media-body">
+						<h2><a class="article-title" href="#">{{ movie.id }}</a></h2>
+						<p class="article-content">{{ movie.text|safe }}</p>
 						<div class="article-metadata">
-              <small class="text-muted">Score: {{ '%0.3f'|format(movie.score) }}</small>
-            </div>
-          </div>
-        </article>
-    		{% endfor %}
-			{% endblock res %}
-
-			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+							<small class="text-muted">Score: {{ '%0.3f'|format(movie.score) }}</small>
+						</div>
+					</div>
+				</article>
 			</div>
+    	{% endfor %}
+			{% endblock content %}
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 </html>
