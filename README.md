@@ -15,10 +15,27 @@ For text search, I used Toastdriven's microsearch (refer to References) and adde
 For the Flask web app API, I used CoreyMschafer's Flask_Blog repository (refer to References) as a starting point.
 
 ### Algorithms Explained
-- __init__: sets up the object & data directory
-- setup(self): creates various data directories (must have read/write access)
-- read_stats(self): reads the index-wide stats generated from stats.json
-- write_stats(self, new_stats): writes the index-wide stats
+##### Documents
+A field-based dictionary where the keys are field names and the values are the field's contents.
+```
+{
+  "id": "movie-title",
+  "text": "This is a movies description",
+}
+```
+##### Inverted Index
+A term-based dictionary where the keys are terms and the values are documents/position information.
+```
+index = {
+        'happy': {
+            'Toy Story': [3],
+        },
+        'back': {
+            'Terminator': [5, 10],
+        },
+        ...
+    }
+```
 ##### BM25 Relevance
 For a given document, the BM25 relevance is calculated as
 ```
@@ -31,7 +48,38 @@ for term in terms:
 return 0.5 + score / (2 * len(terms))
 ```
 where "terms" is a list of terms, "matches" is the first dictionary returned from collect_results(self, terms), "current doc" is the second dictionary returned from collect_results(self, terms), and "total_docs" is the total number of documents in the index. Optionally, "b" is specifies the length of the documents and "k" is used to modify scores to fall in a given range.
-
+##### Other Optimizations
+Ngrams:
+Front n-grams of tokens are made from 3 to 6 in gram length
+```
+terms = {}
+for position, token in enumerate(tokens):
+  for window_length in range(min_gram, min(max_gram + 1, len(token) + 1)):
+    gram = token[:window_length]
+    terms.setdefault(gram, [])
+    if not position in terms[gram]:
+       terms[gram].append(position)
+return terms
+```
+Filter stop words:
+```
+stopwords = set([
+        'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by',
+        'for', 'if', 'in', 'into', 'is', 'it',
+        'no', 'not', 'of', 'on', 'or', 's', 'such',
+        't', 'that', 'the', 'their', 'then', 'there', 'these',
+        'they', 'this', 'to', 'was', 'will', 'with'
+    ])
+```
+Filter punctuation:
+```
+punctuation = re.compile('[~`!@#$%^&*()+={\[}\]|\\:;"\',<.>/?]')
+```
+Stemming:
+```
+ps = PorterStemmer()
+token = ps.stem(token)
+```
 ### Test Cases
 
 ### References
