@@ -2,6 +2,13 @@
 Given a movie dataset, implements text search, classifier by genre, and image caption generator
 
 ### Deployment Instructions
+1. Install Flash:
+```pip install flask```
+2. Run Movifier:
+```sudo python main.py```
+   Wait for dataset to index movies. You will see a message ``` * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)```
+3. In browser (localhost, port 5000):
+```http://127.0.0.1:5000/```
 
 ### Contributions
 For text search, I used Toastdriven's microsearch (refer to References) and added some optimizations. Firstly, I added stemming capabilities using the nltk.stem library. In addition, I fixed a bug with the BM25 algorith that resulted in a divide by zero error.
