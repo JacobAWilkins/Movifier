@@ -95,5 +95,5 @@ def home():
         flash(Markup(f'Query successfully submitted! Found <b>%s</b> results in <b>%0.3f</b> seconds!' % (total_hits, searchTime)), 'success')
     return render_template("home.html", form=form, movies=movies)
 
-if __name__ == "__main__":
-    app.run(debug = False)
+#if __name__ == "__main__":
+#    app.run(debug = False)
