@@ -15,6 +15,22 @@ For text search, I used Toastdriven's microsearch (refer to References) and adde
 For the Flask web app API, I used CoreyMschafer's Flask_Blog repository (refer to References) as a starting point.
 
 ### Algorithms Explained
+- __init__: sets up the object & data directory
+- setup(self): creates various data directories (must have read/write access)
+- read_stats(self): reads the index-wide stats generated from stats.json
+- write_stats(self, new_stats): writes the index-wide stats
+##### BM25 Relevance
+For a given document, the BM25 relevance is calculated as
+```
+score = b
+for term in terms:
+  if matches[term] == 0.0:
+    continue
+  idf = math.log((total_docs - matches[term] + 1.0) / matches[term]) / math.log(1.0 + total_docs)
+  score = score + current_doc.get(term, 0) * idf / (current_doc.get(term, 0) + k)
+return 0.5 + score / (2 * len(terms))
+```
+where "terms" is a list of terms, "matches" is the first dictionary returned from collect_results(self, terms), "current doc" is the second dictionary returned from collect_results(self, terms), and "total_docs" is the total number of documents in the index. Optionally, "b" is specifies the length of the documents and "k" is used to modify scores to fall in a given range.
 
 ### Test Cases
 
