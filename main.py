@@ -15,12 +15,12 @@ import csv, movieclassifier, shutil, time, re
 movies = []
 
 # initial movie classifier
-data_dir = '/movie_index'
+data_dir = '/home/JacobWilkins/Movifier/tmp/movie_index'
 shutil.rmtree(data_dir, ignore_errors=True)
 mc = movieclassifier.Movieclassifier(data_dir)
 
 # index all movies at start
-with open('movies_metadata.csv', newline='') as csvfile:
+with open('/home/JacobWilkins/Movifier/movies_metadata.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     doc_times = []
     counter = 0 #used for testing
@@ -34,7 +34,7 @@ with open('movies_metadata.csv', newline='') as csvfile:
         time_end = time.time() - time_start
         doc_times.append(time_end)
         counter += 1 #test
-        if counter > 200: #only index first 100 rows
+        if counter > 1000: #only index first 1000 rows
             break
     # average time to index a movie
     doc_time_avg = sum(doc_times) / len(doc_times)
@@ -84,7 +84,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'D22B5C72F638152BB566B67B3CF76'
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 @app.route("/home", methods=['GET', 'POST'])
 def home():
     form = TextSearchForm()
