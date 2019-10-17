@@ -10,12 +10,25 @@
     <title>Movifier</title>
   </head>
   <body>
+		<header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="/">Movifier</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
 		<div class="container">
-			<h1> Movifier </h1>
-			<p> <i>Do you like movies?</i> Type a description of your dream movie to get started! </p>
-			<p> Search results are scored based upon BM25 relevance and are typically scored between <i>0.4</i> and <i>1.0</i>. </p>
 			<div class="row">
 				<div class="col-md-8">
+					<p> <i>Do you like movies?</i> Type a description of your dream movie to get started! </p>
 					{% with messages = get_flashed_messages(with_categories=true) %}
 						{% if messages %}
 							{% for category, message in messages %}
@@ -25,15 +38,10 @@
 							{% endfor %}
 						{% endif %}
 					{% endwith %}
-					{% block content %}
-				</div>
-			</div>
-			<div class="row">
-				<div class="content-section col-md-8">
-					<form method="POST" action="">
+					<form class="content-section" method="POST" action="">
 						{{ form.hidden_tag() }}
 						<fieldset class="form-group">
-							<legend class="border-bottom mb-4">Search Movie Descriptions</legend>
+							<legend class="border-bottom mb-4 font-weight-bold">Search Movie Descriptions</legend>
 							<div class="form-group">
 								{{ form.movieDescription.label(class="form-control-label") }}
 								{% if form.movieDescription.errors %}
@@ -66,23 +74,41 @@
 						</div>
 					</form>
 				</div>
+				<div class="col-md-4">
+					<div class="content-section">
+						<h3>Scoring Algorithm</h3>
+						<p class='text-muted'>Search results are scored based upon BM25 relevance and are typically scored between <i>0.4</i> and <i>1.0</i>.</p>
+						<h3>Optimizations</h3>
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-light">Ngram</li>
+							<li class="list-group-item list-group-item-light">Stemming</li>
+							<li class="list-group-item list-group-item-light">Stop Words Filter</li>
+							<li class="list-group-item list-group-item-light">Punctuation Filter</li>
+						</ul>
+					</div>
+				</div>
 			</div>
     	{% for movie in movies %}
 			<div class="row">
-				<article class="media content-section col-md-8">
-					<div class="media-body">
-						<h2><a class="article-title" href="#">{{ movie.id }}</a></h2>
-						<p class="article-content">{{ movie.text|safe }}</p>
-						<div class="article-metadata">
-							<small class="text-muted">Score: {{ '%0.3f'|format(movie.score) }}</small>
+				<div class="col-md-8">
+					<article class="media content-section">
+						<div class="media-body">
+							<h2><a class="article-title" href="#">{{ movie.id }}</a></h2>
+							<p class="article-content">{{ movie.text|safe }}</p>
+							<div class="article-metadata">
+								<small class="text-muted">Score: {{ '%0.5f'|format(movie.score) }}</small>
+							</div>
 						</div>
-					</div>
-				</article>
+					</article>
+				</div>
 			</div>
     	{% endfor %}
-			{% endblock content %}
 		</div>
 		
+		<footer class="page-footer font-small">
+			<div class="footer-copyright text-center py-3">© 2019 Jacob Wilkins. All Rights Reserved.
+			</div>
+		</footer>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
