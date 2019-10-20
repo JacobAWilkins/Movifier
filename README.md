@@ -43,11 +43,9 @@ index = {
 For a given document, the BM25 relevance is calculated as
 ```
 def bm25_relevance(self, terms, matches, current_doc, total_docs, curr_len, avg_len, b, k):
-        score = b
+        score = 0
 
         for term in terms:
-            if matches[term] == 0.0:
-                continue
             idf = math.log((total_docs - matches[term] + 0.5) / (matches[term] + 0.5))
             score = score + (current_doc.get(term, 0) * idf * (k + 1)) / (current_doc.get(term, 0) + k * (1 - b + (b * (curr_len / avg_len))))
 
