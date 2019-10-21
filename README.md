@@ -1,5 +1,7 @@
 # Movifier
-Given a movie dataset, implements text search, classifier by genre, and image caption generator. The text search takes a description of a movie and outputs a list of similar movies using BM25.
+Given a dataset of movie titles and descriptions, implements text search using BM25 to score, classifies movies by genre, and generates captions for movie scenes.
+
+The text search takes a description of a movie and outputs a list of similar movies using BM25.
 
 ### Deployment Instructions
 ##### Online
