@@ -1,13 +1,11 @@
 # Movifier
-Given a dataset of movie titles and descriptions, implements text search using BM25 to score, classifies movies by genre, and generates captions for movie scenes.
-
-The text search takes a description of a movie and outputs a list of similar movies using BM25.
+Given [this](https://www.kaggle.com/rounakbanik/the-movies-dataset) dataset of movie titles and descriptions from Kaggle, Movifier implements text search using Okapi BM25 to score, classifies movies by genre, and generates captions for movie scenes. The text search takes a description of a movie and outputs a list of similar movies with similar descriptions. Movifier is developed using [Flask](https://www.fullstackpython.com/flask.html), a lightweight WSGI web application framework. The project proposal can be found [here](https://docs.google.com/document/d/1uDnyLfvAJTHSIp2gLQYVDAONRQX91yI2uVtycHrf1pE/edit?usp=sharing).
 
 ### Deployment Instructions
 ##### Online
 http://jacobwilkins.pythonanywhere.com/home
 ##### Localhost
-1. Install Flash:
+1. Install Flask:
 ```pip install flask```
 2. Run Movifier:
 ```sudo python main.py```
@@ -18,7 +16,7 @@ http://jacobwilkins.pythonanywhere.com/home
 ### Contributions & References
 * For text search, I used Toastdriven's **[microsearch](https://github.com/toastdriven/microsearch)** repository and added some optimizations. I optimized the text search by adding stemming capabilities using the **[nltk.stem.porter](https://www.nltk.org/_modules/nltk/stem/porter.html)** module. In addition, I added my own Okapi BM25 alogrithm based on the formulas from **[Wikipedia](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function)**
 * For the Flask web app API, I used CoreyMschafer's **[Flask_Blog](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)** repository as a starting point
-* I developed an algorithm to highlight the query tokens in the text description results using regular expression. I used **[this post](https://www.saltycrane.com/blog/2007/10/using-pythons-finditer-to-highlight/)** from the Salty Crane blog as a reference
+* I developed an algorithm to highlight the query tokens in the text description results using regular expression. I used **[this](https://www.saltycrane.com/blog/2007/10/using-pythons-finditer-to-highlight/)** post from the Salty Crane blog as a reference
 
 ### Algorithms Explained
 ##### Documents
