@@ -1,5 +1,5 @@
 # Movifier
-Given [this](https://www.kaggle.com/rounakbanik/the-movies-dataset) dataset of movie titles and descriptions from Kaggle, Movifier implements text search using Okapi BM25 to score, classifies movies by genre, and generates captions for movie scenes. The text search takes a description of a movie and outputs a list of similar movies with similar descriptions. Movifier is developed using [Flask](https://www.fullstackpython.com/flask.html), a lightweight WSGI web application framework. The project proposal can be found [here](https://docs.google.com/document/d/1uDnyLfvAJTHSIp2gLQYVDAONRQX91yI2uVtycHrf1pE/edit?usp=sharing).
+Given **[this](https://www.kaggle.com/rounakbanik/the-movies-dataset)** dataset of movie titles and descriptions from Kaggle, Movifier implements text search using Okapi BM25 to score, classifies movies by genre, and generates captions for movie scenes. The text search takes a description of a movie and outputs a list of similar movies with similar descriptions. Movifier is developed using **[Flask](https://www.fullstackpython.com/flask.html)**, a lightweight WSGI web application framework. The project proposal can be found **[here](https://docs.google.com/document/d/1uDnyLfvAJTHSIp2gLQYVDAONRQX91yI2uVtycHrf1pE/edit?usp=sharing)**.
 
 ### Deployment Instructions
 ##### Online
@@ -19,7 +19,7 @@ http://jacobwilkins.pythonanywhere.com/home
 * I developed an algorithm to highlight the query tokens in the text description results using regular expression. I used **[this](https://www.saltycrane.com/blog/2007/10/using-pythons-finditer-to-highlight/)** post from the Salty Crane blog as a reference
 
 ### Algorithms Explained
-##### Documents
+##### Documents Structure
 A field-based dictionary where the keys are field names and the values are the field's contents.
 ```
 {
@@ -27,7 +27,7 @@ A field-based dictionary where the keys are field names and the values are the f
   "text": "This is a movies description",
 }
 ```
-##### Inverted Index
+##### Inverted Index Structure
 A term-based dictionary where the keys are terms and the values are documents/position information.
 ```
 index = {
@@ -40,33 +40,44 @@ index = {
         ...
     }
 ```
-##### Okapi BM25
-For a given document, the [Okapi BM25](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function) algorithm, is calculated as
+##### Index
+Indexes the first 1000 movies of the movies_metadata.csv dataset. The number of movies indexed can be changed by altering the altering the boundary of the counter. Movies are saved as **[documents](#Documents Structure)** and the terms are saved into an **[inverted index](#Inverted Index Structure)**. The movies are stored in JSON files to allow for easy indexing and searching.
 ```
-def bm25_relevance(self, terms, matches, current_doc, total_docs, curr_len, avg_len, b, k):
-        score = 0
-
-        for term in terms:
-            idf = math.log((total_docs - matches[term] + 0.5) / (matches[term] + 0.5))
-            score = score + (current_doc.get(term, 0) * idf * (k + 1)) / (current_doc.get(term, 0) + k * (1 - b + (b * (curr_len / avg_len))))
-
-        return score
+with open('/home/JacobWilkins/Movifier/movies_metadata.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    counter = 0
+    # index each movie by title and description
+    for row in reader:
+        doc_id = row['original_title']
+        body = row['overview']
+        mc.index(doc_id, {'text': body})
+        counter += 1
+        if counter > 1000: # only index first 1000 rows
+            break
 ```
-where "terms" is a list of terms, "matches" is the first dictionary returned from collect_results(self, terms), "current doc" is the second dictionary returned from collect_results(self, terms), "total_docs" is the total number of documents in the index, "curr_len" is the length of the current document, and "avg_len" is the average length of all the documents. "b" and "k" are used to modify scores to fall in a given range.
-##### Other Optimizations
-* Ngrams:
+##### Search (Okapi BM25)
+For a given document, the **[Okapi BM25](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function)** ranking score is calculated as
+```
+score = 0
+for term in terms:
+    idf = math.log((total_docs - matches[term] + 0.5) / (matches[term] + 0.5))
+    score = score + (current_doc.get(term, 0) * idf * (k + 1)) / (current_doc.get(term, 0) + k * (1 - b + (b * (curr_len / avg_len))))
+return score
+```
+where **terms** is the list of terms in the document, **matches** is the first dictionary returned from collect_results(self, terms), **current doc** is the second dictionary returned from collect_results(self, terms), **total_docs** is the total number of documents in the index, **curr_len** is the length of the current document, and **avg_len** is the average length of all the documents. **b** and **k** are used to modify ranking scores to fall in a given range.
+##### Ngrams
 Front n-grams of tokens are made from 3 to 6 in gram length.
 ```
 terms = {}
 for position, token in enumerate(tokens):
-  for window_length in range(min_gram, min(max_gram + 1, len(token) + 1)):
-    gram = token[:window_length]
-    terms.setdefault(gram, [])
-    if not position in terms[gram]:
-       terms[gram].append(position)
+    for window_length in range(min_gram, min(max_gram + 1, len(token) + 1)):
+        gram = token[:window_length]
+        terms.setdefault(gram, [])
+        if not position in terms[gram]:
+            terms[gram].append(position)
 return terms
 ```
-* Stop words:
+##### Stop words
 Queries are filtered using this set of stop words.
 ```
 stopwords = set([
@@ -77,13 +88,13 @@ stopwords = set([
         'they', 'this', 'to', 'was', 'will', 'with'
     ])
 ```
-* Punctuation:
+##### Punctuation
 Queries are filtered using this punctuation marks regular expression.
 ```
 punctuation = re.compile('[~`!@#$%^&*()+={\[}\]|\\:;"\',<.>/?]')
 ```
-* Stemming:
-Tokens are stemmed using [PorterStemmer()](https://www.nltk.org/_modules/nltk/stem/porter.html) to improve the quality of the search results.
+##### Stemming
+Tokens are stemmed using the nltk **[PorterStemmer](https://www.nltk.org/_modules/nltk/stem/porter.html)** module to improve the quality of the search results.
 ```
 ps = PorterStemmer()
 token = ps.stem(token)
