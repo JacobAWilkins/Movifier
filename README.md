@@ -15,10 +15,10 @@ http://jacobwilkins.pythonanywhere.com/home
 3. In browser (localhost, port 5000):
 ```http://127.0.0.1:5000/```
 
-### Contributions
-For text search, I used Toastdriven's microsearch (refer to References) and added some optimizations. Firstly, I added stemming capabilities using the nltk.stem library. In addition, I added my own Okapi BM25 alogrithm based on the formulas from Wikipedia (refer to References).
-For the Flask web app API, I used CoreyMschafer's Flask_Blog repository (refer to References) as a starting point.
-I developed an algorithm to highlight the query tokens in the text description results. I used a post from the Salty Crane blog as a reference (refer to References).
+### Contributions & References
+* For text search, I used Toastdriven's **[microsearch](https://github.com/toastdriven/microsearch)** repository and added some optimizations. I optimized the text search by adding stemming capabilities using the **[nltk.stem.porter](https://www.nltk.org/_modules/nltk/stem/porter.html)** module. In addition, I added my own Okapi BM25 alogrithm based on the formulas from **[Wikipedia](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function)**
+* For the Flask web app API, I used CoreyMschafer's **[Flask_Blog](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)** repository as a starting point
+* I developed an algorithm to highlight the query tokens in the text description results using regular expression. I used **[this post](https://www.saltycrane.com/blog/2007/10/using-pythons-finditer-to-highlight/)** from the Salty Crane blog as a reference
 
 ### Algorithms Explained
 ##### Documents
@@ -43,7 +43,7 @@ index = {
     }
 ```
 ##### Okapi BM25
-For a given document, the BM25 relevance is calculated as
+For a given document, the [Okapi BM25](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function) algorithm, is calculated as
 ```
 def bm25_relevance(self, terms, matches, current_doc, total_docs, curr_len, avg_len, b, k):
         score = 0
@@ -56,8 +56,8 @@ def bm25_relevance(self, terms, matches, current_doc, total_docs, curr_len, avg_
 ```
 where "terms" is a list of terms, "matches" is the first dictionary returned from collect_results(self, terms), "current doc" is the second dictionary returned from collect_results(self, terms), "total_docs" is the total number of documents in the index, "curr_len" is the length of the current document, and "avg_len" is the average length of all the documents. "b" and "k" are used to modify scores to fall in a given range.
 ##### Other Optimizations
-Ngrams:
-Front n-grams of tokens are made from 3 to 6 in gram length
+* Ngrams:
+Front n-grams of tokens are made from 3 to 6 in gram length.
 ```
 terms = {}
 for position, token in enumerate(tokens):
@@ -68,7 +68,8 @@ for position, token in enumerate(tokens):
        terms[gram].append(position)
 return terms
 ```
-Filter stop words:
+* Stop words:
+Queries are filtered using this set of stop words.
 ```
 stopwords = set([
         'a', 'an', 'and', 'are', 'as', 'at', 'be', 'but', 'by',
@@ -78,23 +79,16 @@ stopwords = set([
         'they', 'this', 'to', 'was', 'will', 'with'
     ])
 ```
-Filter punctuation:
+* Punctuation:
+Queries are filtered using this punctuation marks regular expression.
 ```
 punctuation = re.compile('[~`!@#$%^&*()+={\[}\]|\\:;"\',<.>/?]')
 ```
-Stemming:
+* Stemming:
+Tokens are stemmed using [PorterStemmer()](https://www.nltk.org/_modules/nltk/stem/porter.html) to improve the quality of the search results.
 ```
 ps = PorterStemmer()
 token = ps.stem(token)
 ```
 ### Test Cases
-1. Query: "The Joker wreaks havoc on the people of Gotham", Results: Found 162 results in 0.153 seconds
-
-### References
-I based the text search algorithm on this code: https://github.com/toastdriven/microsearch.
-
-I used this code: https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog as a starting point for the development of the web app.
-
-I used this to develop my Okapi BM25 algorithm: https://en.wikipedia.org/wiki/Okapi_BM25
-
-I referenced this when implementing highlight regular expression: https://www.saltycrane.com/blog/2007/10/using-pythons-finditer-to-highlight/
+1. Query: ```The Joker wreaks havoc on the people of Gotham```, Results: ```Found 162 results in 0.153 seconds```
