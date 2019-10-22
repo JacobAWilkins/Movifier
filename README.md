@@ -40,7 +40,7 @@ index = {
         ...
     }
 ```
-##### Index
+##### Index Algorithm
 Indexes the first 1000 movies of the movies_metadata.csv dataset. The number of movies indexed can be changed by altering the altering the boundary of the counter. Movies are saved as **[documents](#Documents-Structure)** and the terms are saved into an **[inverted index](#Inverted-Index-Structure)**. The movies are stored in JSON files to allow for easy indexing and searching.
 ```
 with open('/home/JacobWilkins/Movifier/movies_metadata.csv', newline='') as csvfile:
@@ -55,7 +55,7 @@ with open('/home/JacobWilkins/Movifier/movies_metadata.csv', newline='') as csvf
         if counter > 1000: # only index first 1000 rows
             break
 ```
-##### Search (Okapi BM25)
+##### Search Algorithm (Okapi BM25)
 For a given document, the **[Okapi BM25](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function)** ranking score is calculated as
 ```
 score = 0
@@ -101,3 +101,8 @@ token = ps.stem(token)
 ```
 ### Test Cases
 1. Query: ```The Joker wreaks havoc on the people of Gotham```, Results: ```Found 162 results in 0.153 seconds```
+
+### Author
+**Jacob Wilkins**
+* **[GitHub](https://github.com/JacobAWilkins/)**
+* **[LinkedIn](https://www.linkedin.com/in/jacob-a-wilkins-cs/)**
