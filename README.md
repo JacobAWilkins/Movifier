@@ -41,7 +41,7 @@ index = {
     }
 ```
 ##### Index
-Indexes the first 1000 movies of the movies_metadata.csv dataset. The number of movies indexed can be changed by altering the altering the boundary of the counter. Movies are saved as **[documents](#Documents Structure)** and the terms are saved into an **[inverted index](#Inverted Index Structure)**. The movies are stored in JSON files to allow for easy indexing and searching.
+Indexes the first 1000 movies of the movies_metadata.csv dataset. The number of movies indexed can be changed by altering the altering the boundary of the counter. Movies are saved as **[documents](#Documents-Structure)** and the terms are saved into an **[inverted index](#Inverted-Index-Structure)**. The movies are stored in JSON files to allow for easy indexing and searching.
 ```
 with open('/home/JacobWilkins/Movifier/movies_metadata.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
