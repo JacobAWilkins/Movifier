@@ -1,6 +1,25 @@
 # Movifier
 Given **[this](https://www.kaggle.com/rounakbanik/the-movies-dataset)** dataset of movie titles and descriptions from Kaggle, Movifier implements text search using Okapi BM25 to score, classifies movies by genre, and generates captions for movie scenes. The text search takes a description of a movie and outputs a list of similar movies with similar descriptions. Movifier is developed using **[Flask](https://www.fullstackpython.com/flask.html)**, a lightweight WSGI web application framework. The project proposal can be found **[here](https://docs.google.com/document/d/1uDnyLfvAJTHSIp2gLQYVDAONRQX91yI2uVtycHrf1pE/edit?usp=sharing)**.
 
+# Table of Contents
+* [Deployment Insctructions](#deployment-instructions)
+  * [Online](#online)
+  * [Localhost](#localhost)
+* [Contributions & References](#contributions--references)
+* [Data Structures](#data-structures)
+  * [Documents Structure](#documents-structure)
+  * [Inverted Index Structure](#inverted-index-structure)
+* [Algorithms Explained](#algorithms-explained)
+  * [Index Algorithm](#index-algorithm)
+  * [Search Algorithm (Okapi BM25)](#search-algorithm-okapi-bm25)
+* [Optimizations](#optimizations)
+  * [Ngrams](#ngrams)
+  * [Stop Words](#stop-words)
+  * [Punctuation](#punctuation)
+  * [Stemming](#stemming)
+* [Test Cases](#test-cases)
+* [Author](#author)
+
 ### Deployment Instructions
 ##### Online
 http://jacobwilkins.pythonanywhere.com/home
@@ -18,7 +37,7 @@ http://jacobwilkins.pythonanywhere.com/home
 * For the Flask web app API, I used CoreyMschafer's **[Flask_Blog](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog)** repository as a starting point
 * I developed an algorithm to highlight the query tokens in the text description results using regular expression. I used **[this](https://www.saltycrane.com/blog/2007/10/using-pythons-finditer-to-highlight/)** post from the Salty Crane blog as a reference
 
-### Algorithms Explained
+### Data Structures
 ##### Documents Structure
 A field-based dictionary where the keys are field names and the values are the field's contents.
 ```
@@ -40,6 +59,7 @@ index = {
         ...
     }
 ```
+### Algorithms Explained
 ##### Index Algorithm
 Indexes the first 1000 movies of the movies_metadata.csv dataset. The number of movies indexed can be changed by altering the altering the boundary of the counter. Movies are saved as **[documents](#Documents-Structure)** and the terms are saved into an **[inverted index](#Inverted-Index-Structure)**. The movies are stored in JSON files to allow for easy indexing and searching.
 ```
@@ -65,6 +85,7 @@ for term in terms:
 return score
 ```
 where **terms** is the list of terms in the document, **matches** is the first dictionary returned from collect_results(self, terms), **current doc** is the second dictionary returned from collect_results(self, terms), **total_docs** is the total number of documents in the index, **curr_len** is the length of the current document, and **avg_len** is the average length of all the documents. **b** and **k** are used to modify ranking scores to fall in a given range.
+### Optimizations
 ##### Ngrams
 Front n-grams of tokens are made from 3 to 6 in gram length.
 ```
