@@ -20,6 +20,7 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+							<a class="nav-item nav-link" href="{{ url_for('classify') }}">Classify</a>
             </div>
           </div>
         </div>
@@ -28,7 +29,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8">
-					<p> <i>Do you like movies?</i> Type a description of your dream movie to get started! </p>
+				<p> <i>Do you like movies?</i> Type a description of your dream movie to get started! </p>
 					{% with messages = get_flashed_messages(with_categories=true) %}
 						{% if messages %}
 							{% for category, message in messages %}
@@ -38,6 +39,8 @@
 							{% endfor %}
 						{% endif %}
 					{% endwith %}
+				</div>
+				<div class="col-md-8">
 					<form class="content-section" method="POST" action="">
 						{{ form.hidden_tag() }}
 						<fieldset class="form-group">
@@ -77,7 +80,7 @@
 				<div class="col-md-4">
 					<div class="content-section">
 						<h3>Scoring Algorithm</h3>
-						<p class='text-muted'>Search results are scored based upon BM25 relevance and are typically scored between <i>0.4</i> and <i>1.0</i>.</p>
+						<p class='text-muted'>Search results are scored based upon the Okapi BM25 algorithm.</p>
 						<h3>Optimizations</h3>
 						<ul class="list-group">
 							<li class="list-group-item list-group-item-light">Ngram</li>
@@ -90,13 +93,20 @@
 			</div>
     	{% for movie in movies %}
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<article class="media content-section">
-						<div class="media-body">
-							<h2><a class="article-title" href="#">{{ movie.id }}</a></h2>
-							<p class="article-content">{{ movie.text|safe }}</p>
-							<div class="article-metadata">
-								<small class="text-muted">Score: {{ '%0.5f'|format(movie.score) }}</small>
+						<div class="col-md-2">
+							<a href="https://www.imdb.com/title/tt{{ movie[0].link }}" target="_blank">
+								<img class="img-fluid" src="https://image.tmdb.org/t/p/w500{{ movie[2].poster }}"/>
+							</a>
+						</div>
+						<div class="col-md-10">
+							<div class="media-body">
+								<h2><a class="article-title" href="https://www.imdb.com/title/tt{{ movie[0].link }}" target="_blank">{{ movie[1].id }} </a><small class="text-muted">hi</small></h2>
+								<p class="article-content">{{ movie[1].text|safe }}</p>
+								<div class="article-metadata bottom-align-text">
+									<small class="text-muted">Score: {{ '%0.5f'|format(movie[1].score) }}</small>
+								</div>
 							</div>
 						</div>
 					</article>
@@ -105,12 +115,12 @@
     	{% endfor %}
 		</div>
 		
-		<footer class="page-footer font-small">
+		<footer class="page-footer font-small bg-steel text-white">
 			<div class="footer-copyright text-center py-3">© 2019 Jacob Wilkins. All Rights Reserved.
 			</div>
 		</footer>
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   </body>
 </html>
