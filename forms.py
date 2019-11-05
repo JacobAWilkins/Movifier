@@ -19,3 +19,10 @@ class TextSearchForm(FlaskForm):
     
     def __repr__(self):
         return f"Movie('{self.movieDescription}', '{self.numResults}')"
+    
+class TextClassifyForm(FlaskForm):
+    movieDescription = TextAreaField('Movie description:', 
+                                     validators=[DataRequired(), Length(min=1, max=500)])
+    submit = SubmitField('Submit')
+    def __repr(self):
+        return f"Classify('{self.movieDescription}')"
