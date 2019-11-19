@@ -142,3 +142,16 @@ http://jacobwilkins.pythonanywhere.com/classifer
 3. In browser (localhost, port 5000):
 ```http://127.0.0.1:5000/classifer```
 
+# Image Caption Generator Documentation
+
+### Deployment Instructions
+##### Online
+http://jacobwilkins.pythonanywhere.com/caption
+##### Localhost
+1. Install Flask:
+```pip install flask```
+2. Run Movifier:
+```sudo python main.py```
+   Wait for dataset to index movies. This will take a while unless you change the number of movies indexed to a lower number. The default is 1000. You can change this in main.py. Afterwards, you will see a message ``` * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)``` in the terminal.
+3. In browser (localhost, port 5000):
+```http://127.0.0.1:5000/caption```
