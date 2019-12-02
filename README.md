@@ -141,6 +141,9 @@ http://jacobwilkins.pythonanywhere.com/classifer
    Wait for dataset to index movies. This will take a while unless you change the number of movies indexed to a lower number. The default is 1000. You can change this in main.py. Afterwards, you will see a message ``` * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)``` in the terminal.
 3. In browser (localhost, port 5000):
 ```http://127.0.0.1:5000/classifer```
+### Contributions & References
+https://stackabuse.com/text-classification-with-python-and-scikit-learn/
+https://github.com/ishmeetkohli/imdbGenreClassification/blob/master/utils.py
 
 # Image Caption Generator Documentation
 
@@ -155,3 +158,6 @@ http://jacobwilkins.pythonanywhere.com/caption
    Wait for dataset to index movies. This will take a while unless you change the number of movies indexed to a lower number. The default is 1000. You can change this in main.py. Afterwards, you will see a message ``` * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)``` in the terminal.
 3. In browser (localhost, port 5000):
 ```http://127.0.0.1:5000/caption```
+
+### Contributions & References
+http://academictorrents.com/details/9dea07ba660a722ae1008c4c8afdd303b6f6e53b
