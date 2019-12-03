@@ -142,8 +142,7 @@ http://jacobwilkins.pythonanywhere.com/classifer
 3. In browser (localhost, port 5000):
 ```http://127.0.0.1:5000/classifer```
 ### Contributions & References
-https://stackabuse.com/text-classification-with-python-and-scikit-learn/
-https://github.com/ishmeetkohli/imdbGenreClassification/blob/master/utils.py
+For the test classifer I used **[this](https://stackabuse.com/text-classification-with-python-and-scikit-learn/)** stackabuse article and **[this](https://github.com/ishmeetkohli/imdbGenreClassification/blob/master/utils.py)** GitHub repository as reference. Both of these solutions used a train test split to test the accuracy of the algorithm, but I modified it to only classify the data inputed by the user.
 
 # Image Caption Generator Documentation
 
