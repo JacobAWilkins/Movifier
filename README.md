@@ -126,6 +126,9 @@ token = ps.stem(token)
 My challenge with the text search was to modify the BM25 algorithm from the reference to be more accurate. To do this I researched the algorithm and created a new algorithm that scored the documents for more accuratley.
 
 # Movie Classifer Documentation
+* [Deployment Insctructions](#deployment-instructions)
+  * [Online](#online)
+  * [Localhost](#localhost)
 
 ### Deployment Instructions
 ##### Online
