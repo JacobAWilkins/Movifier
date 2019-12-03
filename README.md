@@ -18,6 +18,7 @@ Given **[this](https://www.kaggle.com/rounakbanik/the-movies-dataset)** dataset 
   * [Punctuation](#punctuation)
   * [Stemming](#stemming)
 * [Test Cases](#test-cases)
+* [Challenge](#challenge)
 * [Author](#author)
 
 ### Deployment Instructions
@@ -126,9 +127,16 @@ token = ps.stem(token)
 My challenge with the text search was to modify the BM25 algorithm from the reference to be more accurate. To do this I researched the algorithm and created a new algorithm that scored the documents for more accuratley.
 
 # Movie Classifer Documentation
-* [Deployment Insctructions](#deployment-instructions)
-  * [Online](#online)
-  * [Localhost](#localhost)
+* [Deployment Insctructions](#deployment-instructions-1)
+  * [Online](#online-1)
+  * [Localhost](#localhost-1)
+* [Contributions & References](#contributions--references-1)
+* [Algorithms Explained](#algorithms-explained-1)
+  * [Preprocess](#preprocess)
+  * [Count Vectorizer](#count-vectorizer)
+  * [Random Forest Classifer](#random-forest-classifer)
+* [Challenge](#challenge-1)
+* [Author][#author]
 
 ### Deployment Instructions
 ##### Online
