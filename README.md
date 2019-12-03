@@ -136,7 +136,7 @@ My challenge with the text search was to modify the BM25 algorithm from the refe
   * [Count Vectorizer](#count-vectorizer)
   * [Random Forest Classifer](#random-forest-classifer)
 * [Challenge](#challenge-1)
-* [Author][#author]
+* [Author](#author)
 
 ### Deployment Instructions
 ##### Online
