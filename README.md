@@ -150,6 +150,8 @@ Before classification begins, the movie descriptions of the train/test data are 
 The vectorizer fitted and transformed the text descriptions of the train/test data (the train movie decriptions) to identify the data features and then converted them into an array to be used for classification.
 ##### Random Forest Classifier
 The classifier fitted the data features to the movies genres and then used this to make a prediction of the genre for the test data. The prediction is displayed for the user.
+### Challenge
+My challenge was to transform the references that were designed for test train split into a system that used train data to classify a single test case. I resolved this issue by making the train and test data identical in form and used pandas to make Data Frames for the test/train allowing them to both have the same number of data features.
 
 # Image Caption Generator Documentation
 
