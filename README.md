@@ -125,11 +125,6 @@ token = ps.stem(token)
 ### Challenge
 My challenge with the text search was to modify the BM25 algorithm from the reference to be more accurate. To do this I researched the algorithm and created a new algorithm that scored the documents for more accuratley.
 
-### Author
-**Jacob Wilkins**
-* **[GitHub](https://github.com/JacobAWilkins/)**
-* **[LinkedIn](https://www.linkedin.com/in/jacob-a-wilkins-cs/)**
-
 # Movie Classifer Documentation
 
 ### Deployment Instructions
@@ -171,3 +166,8 @@ http://jacobwilkins.pythonanywhere.com/caption
 
 ### Contributions & References
 http://academictorrents.com/details/9dea07ba660a722ae1008c4c8afdd303b6f6e53b
+
+### Author
+**Jacob Wilkins**
+* **[GitHub](https://github.com/JacobAWilkins/)**
+* **[LinkedIn](https://www.linkedin.com/in/jacob-a-wilkins-cs/)**
