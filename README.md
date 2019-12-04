@@ -63,9 +63,9 @@ index = {
 ```
 ### Algorithms Explained
 ##### Important Libraries
-* PortStemmer
-* json
-* hashlib
+* [PortStemmer](http://www.nltk.org/howto/stem.html)
+* [json](https://www.json.org/json-en.html)
+* [hashlib](https://docs.python.org/3/library/hashlib.html)
 ##### Index Algorithm
 Indexes the first 1000 movies of the movies_metadata.csv dataset. The number of movies indexed can be changed by altering the altering the boundary of the counter. Movies are saved as **[documents](#Documents-Structure)** and the terms are saved into an **[inverted index](#Inverted-Index-Structure)**. The movies are stored in JSON files to allow for easy indexing and searching.
 ```
@@ -162,10 +162,10 @@ For the test classifer I used **[this](https://stackabuse.com/text-classificatio
 
 ### Algorithms Explained
 ##### Important Libraries
-* CountVectorizer
-* RandomForestClassifier
-* WordNetLemmatizer
-* pandas
+* [CountVectorizer](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html)
+* [RandomForestClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+* [WordNetLemmatizer](https://www.geeksforgeeks.org/python-lemmatization-with-nltk/)
+* [pandas](https://pandas.pydata.org/pandas-docs/stable/index.html)
 ##### Preprocess
 Before classification begins, the movie descriptions of the train/test data are preprocessed to remove all special characters, remove all single characters, remove all multiple spaces for singles spaces, and converted to lowercase. Finally, lemmantixation is performed.
 ##### Count Vectorizer
@@ -177,6 +177,15 @@ The classifier fitted the data features to the movies genres and then used this 
 My challenge was to transform the references that were designed for test train split into a system that used train data to classify a single test case. I resolved this issue by making the train and test data identical in form and used pandas to make Data Frames for the test/train allowing them to both have the same number of data features.
 
 # Image Caption Generator Documentation
+* [Deployment Insctructions](#deployment-instructions-2)
+  * [Online](#online-2)
+  * [Localhost](#localhost-2)
+* [Contributions & References](#contributions--references-2)
+* [Algorithms Explained](#algorithms-explained-2)
+  * [Important Libraries](#important-libraries-2)
+  * [InceptionV3](#inceptionv3)
+* [Challenge](#challenge-2)
+* [Author](#author)
 
 ### Deployment Instructions
 ##### Online
@@ -192,6 +201,17 @@ http://jacobwilkins.pythonanywhere.com/caption
 
 ### Contributions & References
 http://academictorrents.com/details/9dea07ba660a722ae1008c4c8afdd303b6f6e53b
+
+### Algorithm Explained
+##### Important Libraries
+* [tensorflow](https://www.tensorflow.org/)
+* [sklearn.model_selection.train_test_split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+* [sklearn.utils.shuffle](https://scikit-learn.org/stable/modules/generated/sklearn.utils.shuffle.html)
+* [PIL.Image](https://pillow.readthedocs.io/en/stable/reference/Image.html)
+##### InceptionV3
+A deep learning model is preprocessed, built, and trained using **[InceptionV3](https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3)** (from TensorFlow's keras API). The image features are then extracted from the model using new inputs and a hidden layer to generate the caption. Max length is determined for the attention weights. The captions are tokenized into vector sequences which are padded based on the max length. The other features are determined using the embedding dimensions and units size.
+
+### Challenge
 
 ### Author
 **Jacob Wilkins**
