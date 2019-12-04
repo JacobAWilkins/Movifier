@@ -21,6 +21,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
 							<a class="nav-item nav-link" href="{{ url_for('classify') }}">Classify</a>
+							<a class="nav-item nav-link" href="{{ url_for('caption') }}">Caption</a>
             </div>
           </div>
         </div>
@@ -76,16 +77,13 @@
 					</div>
 				</div>
 			</div>
-    	{% for movie in movies %}
+    	{% for res in classifyRes %}
 			<div class="row">
 				<div class="col-md-8">
 					<article class="media content-section">
 						<div class="media-body">
-							<h2><a class="article-title" href="#">{{ movie.id }}</a></h2>
-							<p class="article-content">{{ movie.text|safe }}</p>
-							<div class="article-metadata">
-								<small class="text-muted">Score: {{ '%0.5f'|format(movie.score) }}</small>
-							</div>
+							<h2>Results</h2>
+							<p class="article-content">Genre Classification: <u>{{ res[0] }}</u></p>
 						</div>
 					</article>
 				</div>
