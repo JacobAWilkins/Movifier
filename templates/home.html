@@ -21,6 +21,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
 							<a class="nav-item nav-link" href="{{ url_for('classify') }}">Classify</a>
+							<a class="nav-item nav-link" href="{{ url_for('caption') }}">Caption</a>
             </div>
           </div>
         </div>
@@ -102,7 +103,7 @@
 						</div>
 						<div class="col-md-10">
 							<div class="media-body">
-								<h2><a class="article-title" href="https://www.imdb.com/title/tt{{ movie[0].link }}" target="_blank">{{ movie[1].id }} </a><small class="text-muted">hi</small></h2>
+								<h2><a class="article-title" href="https://www.imdb.com/title/tt{{ movie[0].link }}" target="_blank">{{ movie[1].id }} </a></h2>
 								<p class="article-content">{{ movie[1].text|safe }}</p>
 								<div class="article-metadata bottom-align-text">
 									<small class="text-muted">Score: {{ '%0.5f'|format(movie[1].score) }}</small>
