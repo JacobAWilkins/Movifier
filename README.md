@@ -1,4 +1,10 @@
 # Movifier
+* **[Introduction](#introduction)**
+* **[Text Search Documentation](#text-search-documentation)**
+* **[Movie Classifier Documentation](#movie-classifier-documentation)**
+* **[Image Caption Generator Documentation](#image-caption-generator-documentation)**
+
+# Introduction
 Given **[this](https://www.kaggle.com/rounakbanik/the-movies-dataset)** dataset of movie titles and descriptions from Kaggle, Movifier implements text search using Okapi BM25 to score, classifies movies by genre, and generates captions for movie scenes. The text search takes a description of a movie and outputs a list of similar movies with similar descriptions. Movifier is developed using **[Flask](https://www.fullstackpython.com/flask.html)**, a lightweight WSGI web application framework. The project proposal can be found **[here](https://docs.google.com/document/d/1uDnyLfvAJTHSIp2gLQYVDAONRQX91yI2uVtycHrf1pE/edit?usp=sharing)**.
 
 # Text Search Documentation
@@ -132,7 +138,7 @@ token = ps.stem(token)
 ### Challenge
 My challenge with the text search was to modify the BM25 algorithm from the reference to be more accurate. To do this I researched the algorithm and created a new algorithm that scored the documents more accurately. The ranking functions I used can be found [here](https://en.wikipedia.org/wiki/Okapi_BM25#The_ranking_function)
 
-# Movie Classifer Documentation
+# Movie Classifier Documentation
 * [Deployment Insctructions](#deployment-instructions-1)
   * [Online](#online-1)
   * [Localhost](#localhost-1)
